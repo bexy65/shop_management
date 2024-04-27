@@ -79,9 +79,8 @@ class MyShop:
 
         if db.authenticate_user(db, username, password):
             print('authenticated')
-        
+            self.root.geometry(self.app_geometry)
 
-        self.root.geometry(self.app_geometry)
         print(f"Login: Username={username}, Password={password}")
 
 
