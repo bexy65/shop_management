@@ -13,7 +13,7 @@ class Database_client:
                 password TEXT
             )
         ''')
-    
+        
     def create_user(self, username, password):
 
         if len(password) < 8 or ' ' in password:
