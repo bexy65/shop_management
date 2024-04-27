@@ -14,7 +14,6 @@ class Database_client:
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT UNIQUE,
-                email TEXT UNIQUE,
                 password TEXT
             )
         ''')
@@ -33,7 +32,6 @@ class Database_client:
     def authenticate_user(self, username, password):
         self.cursor.execute('SELECT * FROM users WHERE username=? AND password=?', (username, password))
         user = self.cursor.fetchone()
-        print(user, 'is authenticated')
         return user is not None
     
 
