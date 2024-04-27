@@ -1,9 +1,5 @@
 import sqlite3
-
-# Connect to SQLite database (create if not exists)
-
-# Create users table if not exists
-
+import hashlib
 
 class Database_client:
     db_connection = sqlite3.connect('myshop.db')
@@ -24,13 +20,15 @@ class Database_client:
             print("Password must be at least 8 characters long and cannot contain spaces")
             return
 
-        self.cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, password))
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+        self.cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_password))
         self.db_connection.commit()
 
 
     
     def authenticate_user(self, username, password):
-        self.cursor.execute('SELECT * FROM users WHERE username=? AND password=?', (username, password))
+        decoded_password = hashlib.sha256(password.encode()).hexdigest()
+        self.cursor.execute('SELECT * FROM users WHERE username=? AND password=?', (username, decoded_password))
         user = self.cursor.fetchone()
         return user is not None
     
