@@ -2,7 +2,7 @@ from tkinter import *
 from database_utils import Database_client as db
 
 
-class MyShop:
+class LoginForm:
     root = Tk()
     font_family ='JetBrains Mono'
     login_geometry = '450x250'
@@ -95,4 +95,4 @@ class MyShop:
 
 
 
-myshop = MyShop()
+app = LoginForm()
