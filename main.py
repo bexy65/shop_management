@@ -23,7 +23,6 @@ class MyShop:
 
 
     def draw_login_form(self):
-    # Clear any existing widgets
         for widget in self.root.winfo_children():
             widget.destroy()
     
@@ -73,24 +72,25 @@ class MyShop:
 
 
     def login(self):
-        # Placeholder for login functionality
         username = self.username_entry.get()
         password = self.password_entry.get()
 
         if db.authenticate_user(db, username, password):
             print('authenticated')
-            self.root.geometry(self.app_geometry)
-
-        print(f"Login: Username={username}, Password={password}")
+        else:
+            error_label = Label(self.root, text='Please check your password or username')
+            error_label.pack(padx=5, pady=5)
 
 
     def register(self):
-        # Placeholder for register functionality
         username = self.username_entry.get()
         password = self.password_entry.get()
-        db.create_user(db,username , password)
-        print(f"Register: Username={username}, Password={password}")
-
+        try:
+            db.create_user(db, username, password)
+            self.draw_login_form()
+        except Exception as e:
+            error_label = Label(self.root, text='Error!Please use unique username!')
+            error_label.pack(padx=5, pady=5)
 
 
 

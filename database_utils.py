@@ -15,14 +15,13 @@ class Database_client:
         ''')
         
     def create_user(self, username, password):
-
         if len(password) < 8 or ' ' in password:
-            print("Password must be at least 8 characters long and cannot contain spaces")
-            return
+            raise ValueError("Password must be at least 8 characters long and cannot contain spaces")
 
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
         self.cursor.execute('INSERT INTO users (username, password) VALUES (?, ?)', (username, hashed_password))
         self.db_connection.commit()
+    
 
 
     
@@ -30,7 +29,11 @@ class Database_client:
         decoded_password = hashlib.sha256(password.encode()).hexdigest()
         self.cursor.execute('SELECT * FROM users WHERE username=? AND password=?', (username, decoded_password))
         user = self.cursor.fetchone()
-        return user is not None
+        
+        if user:
+            return True
+        else:
+            return False
     
 
 db = Database_client()
