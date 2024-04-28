@@ -1,5 +1,6 @@
 from tkinter import *
 from database_utils import Database_client as db
+from main import Dashboard
 
 
 class MyShop:
@@ -8,6 +9,7 @@ class MyShop:
     login_geometry = '450x250'
     app_geometry = '700x400'
     window_minsize_geometry =[250, 200]
+    db = db()
 
     def __init__(self):
         self.draw_window()
@@ -75,8 +77,11 @@ class MyShop:
         username = self.username_entry.get()
         password = self.password_entry.get()
 
-        if db.authenticate_user(db, username, password):
+        if self.db.authenticate_user(username, password):
             print('authenticated')
+            self.root.destroy()
+            #invoke main app/dashboard
+            init = Dashboard()
         else:
             error_label = Label(self.root, text='Please check your password or username')
             error_label.pack(padx=5, pady=5)
@@ -86,9 +91,10 @@ class MyShop:
         username = self.username_entry.get()
         password = self.password_entry.get()
         try:
-            db.create_user(db, username, password)
+            self.db.create_user(username, password)
             self.draw_login_form()
         except Exception as e:
+            print("Error: ", e)
             error_label = Label(self.root, text='Error!Please use unique username!')
             error_label.pack(padx=5, pady=5)
 
