@@ -41,6 +41,7 @@ class Dashboard:
 
     def cancel_changes(self, window, editable_entries, data):
         # Clear Entry widgets and re-insert original data
+        #Logic to cancel changes and stop it as it is
         for i, (name_entry, price_entry, count_entry) in enumerate(editable_entries):
             name_entry.delete(0, END)
             name_entry.insert(0, data[i][0])
@@ -49,7 +50,6 @@ class Dashboard:
             count_entry.delete(0, END)
             count_entry.insert(0, data[i][2] if data[i][2] is not None else '')
         
-        window.destroy()
             
     def open_products_windows(self):
         products_window = Tk()
@@ -153,4 +153,4 @@ class Dashboard:
     
     
 
-# app = Dashboard()
+app = Dashboard()
