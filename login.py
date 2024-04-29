@@ -1,5 +1,5 @@
 from tkinter import *
-from database_utils import Database_client
+from database_utils import DatabaseClient
 from main import Dashboard
 
 
@@ -9,7 +9,7 @@ class LoginForm:
     login_geometry = '450x250'
     app_geometry = '700x400'
     window_minsize_geometry =[250, 200]
-    db = Database_client()
+    db = DatabaseClient()
 
     def __init__(self):
         self.draw_window()
