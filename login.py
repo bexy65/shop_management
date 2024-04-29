@@ -78,7 +78,6 @@ class LoginForm:
         password = self.password_entry.get()
 
         if self.db.authenticate_user(username, password):
-            print('authenticated')
             self.root.destroy()
             #invoke main app/dashboard
             init = Dashboard()

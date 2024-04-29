@@ -75,7 +75,6 @@ class DatabaseClient:
                 cursor = conn.cursor()
                 cursor.execute('SELECT name, price, count, category FROM products')
                 products = cursor.fetchall()
-                print(products)
                 return products                
         except Exception as e:
             print('Error:', e)
@@ -96,5 +95,3 @@ class DatabaseClient:
  
             
 db = DatabaseClient()
-
-db.get_products()
