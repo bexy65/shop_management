@@ -1,5 +1,5 @@
 from tkinter import *
-from database_utils import Database_client as db
+from database_utils import Database_client
 from main import Dashboard
 
 
@@ -9,7 +9,7 @@ class MyShop:
     login_geometry = '450x250'
     app_geometry = '700x400'
     window_minsize_geometry =[250, 200]
-    db = db()
+    db = Database_client()
 
     def __init__(self):
         self.draw_window()
@@ -93,6 +93,7 @@ class MyShop:
         try:
             self.db.create_user(username, password)
             self.draw_login_form()
+            
         except Exception as e:
             print("Error: ", e)
             error_label = Label(self.root, text='Error!Please use unique username!')
