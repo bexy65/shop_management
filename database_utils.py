@@ -1,10 +1,10 @@
 import sqlite3
 import hashlib
 
+
 class DatabaseClient:
     def __init__(self, db_file='myshop.db'):
         self.db_file = db_file
-      
 
     def _get_connection(self):
         return sqlite3.connect(self.db_file)
@@ -29,7 +29,6 @@ class DatabaseClient:
                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                                     name TEXT UNIQUE
                             )''')
-            
 
     def create_user(self, username, password):
         if len(password) < 8 or ' ' in password:
@@ -54,7 +53,7 @@ class DatabaseClient:
             cursor = conn.cursor()
             cursor.execute('INSERT INTO categories (name) VALUES (?)', (name,))
             conn.commit()
-    
+
     def get_categories(self):
         try:
             with self._get_connection() as conn:
@@ -63,35 +62,40 @@ class DatabaseClient:
                 categories = cursor.fetchall()
                 category_names = [category[0] for category in categories]
                 return category_names
-            
+
         except Exception as e:
             print("Error:", e)
             return None
-    
-    
+
     def get_products(self):
         try:
             with self._get_connection() as conn:
                 cursor = conn.cursor()
                 cursor.execute('SELECT name, price, count, category FROM products')
                 products = cursor.fetchall()
-                return products                
+                return products
         except Exception as e:
             print('Error:', e)
             return None
-    
+
     def add_product(self, product):
         with self._get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute('INSERT INTO products (name, category, price, count) VALUES (?, ?, ?, ?)', (product['name'], product['category'], product['price'], product['count']))
+            cursor.execute('INSERT INTO products (name, category, price, count) VALUES (?, ?, ?, ?)',
+                           (product['name'], product['category'], product['price'], product['count']))
             conn.commit()
-    
+
+    def update_product(self, product):
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute('UPDATE products SET price = ?, count = ? WHERE name = ?', (product['price'], product['count'], product['name']))
+            print(product, 'Successfully updated')
+            conn.commit()
     def remove_product(self, product_name):
         with self._get_connection() as conn:
             cursor = conn.cursor()
             cursor.execute('DELETE FROM products WHERE name=?', (product_name))
             conn.commit()
-    
- 
-            
+
+
 db = DatabaseClient()

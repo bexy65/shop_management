@@ -37,7 +37,15 @@ class Dashboard:
             price = price_entry.get()
             count = count_entry.get()
             # Update data list in DB with edited values
-            print(name, price, count)
+            product = {
+                'name': name,
+                'price': price,
+                'count': count
+            }
+
+            self.db.update_product(product)
+
+
 
     def cancel_changes(self, window, editable_entries, data):
         # Clear Entry widgets and re-insert original data
@@ -134,23 +142,22 @@ class Dashboard:
         product_price_label.pack()
         price_entry = Entry(product_window)
         price_entry.pack(pady=5)
-        
-        
+
         def add_product():
             product = {
-                'name':name_entry.get(),
-                'price':price_entry.get(),
-                'category':dropdown.get(),
-                'count':count_entry.get()
+                'name': name_entry.get(),
+                'price': price_entry.get(),
+                'category': dropdown.get(),
+                'count': count_entry.get()
             }
-           
-           
+
             self.db.add_product(product)
             product_window.destroy()
         
         button = Button(product_window, text='ADD', command=add_product)
         button.pack()
-    
+
+
     
 
 app = Dashboard()
